@@ -2,12 +2,6 @@
 
 A single-page web application that demonstrates how to use query strings (`?param=value`) to pass data between pages. The app includes five interactive mini-apps, each showing a different way query parameters can be used.
 
-![Query String Applications](https://via.placeholder.com/800x400/4361ee/ffffff?text=Query+String+Applications)
-
-## 🔗 Live Demo
-
-**(https://shehryarhafeez.github.io/Query-string-multiapps/?name=Shehryar%20Hafeez%20Awan)**
-
 ## ✨ Features
 
 ### 🔹 Navigation System
@@ -74,3 +68,7 @@ Uses **URLSearchParams API** to:
 - Event listeners for nav switching
 - Query parameter parsing
 - App logic for greeting, calculator, theme, products, quiz
+
+## 🔗 Live Demo
+
+**(https://shehryarhafeez.github.io/Query-string-multiapps/?name=Shehryar%20Hafeez%20Awan)**
