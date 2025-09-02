@@ -71,4 +71,4 @@ Uses **URLSearchParams API** to:
 
 ## 🔗 Live Demo
 
-**(https://shehryarhafeez.github.io/Query-string-multiapps/?name=Shehryar%20Hafeez%20Awan)**
+**(https://shehryarhafeez.github.io/Query-string-multiapps/index.html)**
