@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - Result</title>
+  <style>
+    :root {
+      --primary-color: #f50000;
+      --secondary-color: #000000;
+      --success-color: #4cc9f0;
+      --warning-color: #f72585;
+      --light-bg: #f8f9fa;
+      --dark-bg: #212529;
+      --blue-bg: #03045e;
+      --light-text: #f8f9fa;
+      --dark-text: #212529;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      transition: var(--transition);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .app-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 30px;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .app-card h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .result-text {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--dark-text);
+      padding: 15px;
+      margin-top: 15px;
+      background: #f1f1f1;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 10px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: var(--border-radius);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Quiz Application</h1>
+      <p>Your performance summary</p>
+    </header>
+
+    <div class="app-card">
+      <h2>Quiz Result</h2>
+      <div id="result" class="result-text"></div>
+      <button onclick="window.location.href='index.html'">Try Again</button>
+    </div>
+
+    <footer>
+      <p>Query String Applications &copy; 2025</p>
+    </footer>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const user = urlParams.get("user");
+    const score = urlParams.get("score");
+
+    document.getElementById("result").textContent = `${user}, you scored ${score} points!`;
+  </script>
+</body>
+</html>
