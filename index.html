@@ -21,7 +21,7 @@
         }
 
         * {
-            margin: 0;
+            margin: 100;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,7 +30,7 @@
         body {
             background-color: var(--light-bg);
             color: var(--dark-text);
-            line-height: 1.6;
+    
             transition: var(--transition);
         }
 
@@ -47,7 +47,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+           
         }
 
         header {
@@ -62,7 +62,7 @@
 
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         /* Navigation Styles */
@@ -94,7 +94,7 @@
         }
 
         .nav-item:hover {
-            background-color: rgba(43, 201, 153, 0.1);
+            background-color: rgba(0, 255, 179, 0.1);
         }
 
         .nav-item.active {
@@ -121,7 +121,7 @@
         .app-card {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 20px;
+            padding: 60px;
             box-shadow: var(--box-shadow);
             transition: var(--transition);
         }
@@ -154,11 +154,14 @@
         }
 
         input, select, button {
-            width: 100%;
+            width: 50%;
             padding: 10px;
+            margin-left: 30%;
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
             font-size: 1rem;
+            justify-content: center;
+            align-content: center;
         }
 
         button {
@@ -177,6 +180,7 @@
         .result {
             margin-top: 20px;
             padding: 15px;
+            font-size: large;
             background-color: var(--light-bg);
             border-radius: var(--border-radius);
             text-align: center;
@@ -210,10 +214,11 @@
         footer {
             text-align: center;
             margin-top: 40px;
-            padding: 20px;
+            padding: 10px;
             background-color: var(--primary-color);
             color: white;
             border-radius: var(--border-radius);
+            width: 100%;
         }
 
         @media (max-width: 768px) {
@@ -386,203 +391,187 @@
             </div>
         </div>
 
-        <footer>
+        
+    </div>
+<footer>
             <p>Query String Applications &copy; 2025</p>
         </footer>
-    </div>
-
     <script>
-        // Product data for Task 4
-        const products = [
-            { id: 101, name: "Hp-Laptop", price: 500 },
-            { id: 102, name: "Iphone-XR", price: 300 },
-            { id: 103, name: "Wireless-HeadPhones", price: 100 },
-            { id: 104, name: "MousePad", price: 30 },
-            { id: 105, name: "Type-C-Charger", price: 50 },
-            { id: 106, name: "Leather-Bag", price: 400 },
-            { id: 107, name: "vivo-Y29", price: 300 },
-        ];
+    // ---------------------------
+// Task 4: Product Data
+// ---------------------------
+const products = [
+    { id: 101, name: "Hp-Laptop", price: 500 },
+    { id: 102, name: "Iphone-XR", price: 300 },
+    { id: 103, name: "Wireless-HeadPhones", price: 100 },
+    { id: 104, name: "MousePad", price: 30 },
+    { id: 105, name: "Type-C-Charger", price: 50 },
+    { id: 106, name: "Leather-Bag", price: 400 },
+    { id: 107, name: "vivo-Y29", price: 300 },
+];
 
-        // Navigation functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set up navigation
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Update active nav item
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show corresponding app view
-                    const appId = this.getAttribute('data-app');
-                    const appViews = document.querySelectorAll('.app-view');
-                    appViews.forEach(view => view.classList.remove('active'));
-                    document.getElementById(`${appId}-app`).classList.add('active');
-                });
-            });
-            
-            // Check for query parameters in the URL
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            // Task 1: Greeting App
-            if (urlParams.has('name')) {
-                // Show greeting app if name parameter exists
-                showApp('greeting');
-                const name = urlParams.get('name');
-                document.getElementById('greeting-result').textContent = `Hello ${name}! Welcome back.`;
-                document.getElementById('name').value = name;
-            }
-            
-            // Task 2: Calculator App
-            if (urlParams.has('num1') && urlParams.has('num2') && urlParams.has('op')) {
-                // Show calculator app if calculation parameters exist
-                showApp('calculator');
-                const num1 = parseFloat(urlParams.get('num1'));
-                const num2 = parseFloat(urlParams.get('num2'));
-                const op = urlParams.get('op');
-                
-                let result;
-                switch (op) {
-                    case 'add':
-                        result = num1 + num2;
-                        break;
-                    case 'subtract':
-                        result = num1 - num2;
-                        break;
-                    case 'multiply':
-                        result = num1 * num2;
-                        break;
-                    case 'divide':
-                        result = num1 / num2;
-                        break;
-                    default:
-                        result = 'Invalid operation';
-                }
-                
-                document.getElementById('calculation-result').textContent = `Result: ${result}`;
-                document.getElementById('num1').value = num1;
-                document.getElementById('num2').value = num2;
-                document.getElementById('operation').value = op;
-            }
-            
-            // Task 3: Theme Switcher
-            if (urlParams.has('theme')) {
-                // Show theme app if theme parameter exists
-                showApp('theme');
-                const theme = urlParams.get('theme');
-                document.body.className = `theme-${theme}`;
-                document.getElementById('theme').value = theme;
-                document.getElementById('current-theme').textContent = 
-                    theme.charAt(0).toUpperCase() + theme.slice(1);
-            }
-            
-            // Task 4: Product Viewer
-            if (urlParams.has('id')) {
-                // Show product app if id parameter exists
-                showApp('product');
-                const productId = parseInt(urlParams.get('id'));
-                const product = products.find(p => p.id === productId);
-                
-                if (product) {
-                    document.getElementById('product-result').textContent = 
-                        `${product.name}: $${product.price}`;
-                    document.getElementById('productId').value = productId;
-                } else {
-                    document.getElementById('product-result').textContent = 
-                        'Product not found';
-                }
-            }
-            
-            // Task 5: Quiz App
-            if (urlParams.has('user') && urlParams.has('score')) {
-                // Show quiz app if quiz parameters exist
-                showApp('quiz');
-                const user = urlParams.get('user');
-                const score = urlParams.get('score');
-                
-                document.getElementById('quiz-result').textContent = 
-                    `${user}, you scored ${score} out of 3 points!`;
-                document.getElementById('quizUser').value = user;
-            }
-        });
+// ---------------------------
+// Function to show a specific app
+// ---------------------------
+function showApp(appId) {
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-app') === appId) {
+            item.classList.add('active');
+        }
+    });
 
-        // Function to show a specific app
-        function showApp(appId) {
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('data-app') === appId) {
-                    item.classList.add('active');
-                }
-            });
-            
+    const appViews = document.querySelectorAll('.app-view');
+    appViews.forEach(view => view.classList.remove('active'));
+    document.getElementById(`${appId}-app`).classList.add('active');
+}
+
+// ---------------------------
+// Task Functions (1–5)
+// ---------------------------
+
+// Task 1: Greet User
+function greetUser() {
+    const name = document.getElementById('name').value.trim();
+    if (name) {
+        window.location.href = `${window.location.pathname}?name=${encodeURIComponent(name)}`;
+    } else {
+        document.getElementById('greeting-result').textContent = 'Please enter your name.';
+    }
+}
+
+// Task 2: Calculate
+function calculate() {
+    const num1 = document.getElementById('num1').value;
+    const num2 = document.getElementById('num2').value;
+    const op = document.getElementById('operation').value;
+
+    if (num1 && num2) {
+        window.location.href = `${window.location.pathname}?num1=${num1}&num2=${num2}&op=${op}`;
+    } else {
+        document.getElementById('calculation-result').textContent = 'Please enter both numbers.';
+    }
+}
+
+// Task 3: Change Theme
+function changeTheme() {
+    const theme = document.getElementById('theme').value;
+    window.location.href = `${window.location.pathname}?theme=${theme}`;
+}
+
+// Task 4: View Product
+function viewProduct() {
+    const productId = document.getElementById('productId').value;
+    if (productId) {
+        window.location.href = `${window.location.pathname}?id=${productId}`;
+    } else {
+        document.getElementById('product-result').textContent = 'Please enter a product ID.';
+    }
+}
+
+// Task 5: Submit Quiz
+function submitQuiz() {
+    const user = document.getElementById('quizUser').value.trim();
+    if (!user) {
+        document.getElementById('quiz-result').textContent = 'Please enter your name.';
+        return;
+    }
+
+    let score = 0;
+    if (document.getElementById('q1').value === '4') score++;
+    if (document.getElementById('q2').value === 'Paris') score++;
+    if (document.getElementById('q3').value === 'Carrot') score++;
+
+    window.location.href = `${window.location.pathname}?user=${encodeURIComponent(user)}&score=${score}`;
+}
+
+// ---------------------------
+// DOMContentLoaded → Navigation & Query Handling
+// ---------------------------
+document.addEventListener('DOMContentLoaded', function () {
+    // Navigation setup
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function () {
+            navItems.forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+
+            const appId = this.getAttribute('data-app');
             const appViews = document.querySelectorAll('.app-view');
             appViews.forEach(view => view.classList.remove('active'));
             document.getElementById(`${appId}-app`).classList.add('active');
+        });
+    });
+
+    // Query string parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Task 1: Greeting
+    if (urlParams.has('name')) {
+        showApp('greeting');
+        const name = urlParams.get('name');
+        document.getElementById('greeting-result').textContent = `Hello ${name}! Welcome back.`;
+        document.getElementById('name').value = name;
+    }
+
+    // Task 2: Calculator
+    if (urlParams.has('num1') && urlParams.has('num2') && urlParams.has('op')) {
+        showApp('calculator');
+        const num1 = parseFloat(urlParams.get('num1'));
+        const num2 = parseFloat(urlParams.get('num2'));
+        const op = urlParams.get('op');
+
+        let result;
+        switch (op) {
+            case 'add': result = num1 + num2; break;
+            case 'subtract': result = num1 - num2; break;
+            case 'multiply': result = num1 * num2; break;
+            case 'divide': result = num1 / num2; break;
+            default: result = 'Invalid operation';
         }
 
+        document.getElementById('calculation-result').textContent = `Result: ${result}`;
+        document.getElementById('num1').value = num1;
+        document.getElementById('num2').value = num2;
+        document.getElementById('operation').value = op;
+    }
 
+    // Task 3: Theme
+    if (urlParams.has('theme')) {
+        showApp('theme');
+        const theme = urlParams.get('theme');
+        document.body.className = `theme-${theme}`;
+        document.getElementById('theme').value = theme;
+        document.getElementById('current-theme').textContent =
+            theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
 
-        // Task 1: Greet User
-        function greetUser() {
-            const name = document.getElementById('name').value.trim();
-            if (name) {
-                // Update the URL with query string
-                window.location.href = `${window.location.pathname}?name=${encodeURIComponent(name)}`;
-            } else {
-                document.getElementById('greeting-result').textContent = 'Please enter your name.';
-            }
+    // Task 4: Product
+    if (urlParams.has('id')) {
+        showApp('product');
+        const productId = parseInt(urlParams.get('id'));
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            document.getElementById('product-result').textContent = `${product.name}: $${product.price}`;
+            document.getElementById('productId').value = productId;
+        } else {
+            document.getElementById('product-result').textContent = 'Product not found';
         }
+    }
 
-        // Task 2: Calculate
-        function calculate() {
-            const num1 = document.getElementById('num1').value;
-            const num2 = document.getElementById('num2').value;
-            const op = document.getElementById('operation').value;
-            
-            if (num1 && num2) {
-                // Update the URL with query string
-                window.location.href = `${window.location.pathname}?num1=${num1}&num2=${num2}&op=${op}`;
-            } else {
-                document.getElementById('calculation-result').textContent = 'Please enter both numbers.';
-            }
-        }
+    // Task 5: Quiz
+    if (urlParams.has('user') && urlParams.has('score')) {
+        showApp('quiz');
+        const user = urlParams.get('user');
+        const score = urlParams.get('score');
 
-        // Task 3: Change Theme
-        function changeTheme() {
-            const theme = document.getElementById('theme').value;
-            // Update the URL with query string
-            window.location.href = `${window.location.pathname}?theme=${theme}`;
-        }
+        document.getElementById('quiz-result').textContent = `${user}, you scored ${score} out of 3 points!`;
+        document.getElementById('quizUser').value = user;
+    }
+});
 
-        // Task 4: View Product
-        function viewProduct() {
-            const productId = document.getElementById('productId').value;
-            if (productId) {
-                // Update the URL with query string
-                window.location.href = `${window.location.pathname}?id=${productId}`;
-            } else {
-                document.getElementById('product-result').textContent = 'Please enter a product ID.';
-            }
-        }
-
-        // Task 5: Submit Quiz
-        function submitQuiz() {
-            const user = document.getElementById('quizUser').value.trim();
-            if (!user) {
-                document.getElementById('quiz-result').textContent = 'Please enter your name.';
-                return;
-            }
-            
-            // Calculate score
-            let score = 0;
-            if (document.getElementById('q1').value === '4') score++;
-            if (document.getElementById('q2').value === 'Paris') score++;
-            if (document.getElementById('q3').value === 'Carrot') score++;
-            
-            // Update the URL with query string
-            window.location.href = `${window.location.pathname}?user=${encodeURIComponent(user)}&score=${score}`;
-        }
     </script>
 </body>
 </html>
