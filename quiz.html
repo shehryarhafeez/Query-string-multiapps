@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - Page 2</title>
+  <style>
+    :root {
+      --primary-color: #f50000;
+      --secondary-color: #000000;
+      --success-color: #4cc9f0;
+      --warning-color: #f72585;
+      --light-bg: #f8f9fa;
+      --dark-bg: #212529;
+      --blue-bg: #03045e;
+      --light-text: #f8f9fa;
+      --dark-text: #212529;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      transition: var(--transition);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .app-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 30px;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .app-card h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      margin-top: 5px;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .welcome {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 10px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: var(--border-radius);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Quiz Application</h1>
+      <p>Answer the questions below and test your knowledge!</p>
+    </header>
+
+    <div class="app-card">
+      <h2>Quiz Questions</h2>
+      <div id="welcome" class="welcome"></div>
+
+      <form id="quizForm">
+        <div class="form-group">
+          <label>1. What is 2 + 2?</label>
+          <select name="q1">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>2. What is the capital of France?</label>
+          <select name="q2">
+            <option value="London">London</option>
+            <option value="Berlin">Berlin</option>
+            <option value="Paris">Paris</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>3. Which is not a programming language?</label>
+          <select name="q3">
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="Carrot">Carrot</option>
+          </select>
+        </div>
+
+        <button type="submit">Submit Quiz</button>
+      </form>
+    </div>
+
+    <footer>
+      <p>Query String Applications &copy; 2025</p>
+    </footer>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const user = urlParams.get("user");
+
+    document.getElementById("welcome").textContent = `Hello ${user}, please take the quiz!`;
+
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let score = 0;
+      if (this.q1.value === "4") score++;
+      if (this.q2.value === "Paris") score++;
+      if (this.q3.value === "Carrot") score++;
+
+      window.location.href = `result.html?user=${encodeURIComponent(user)}&score=${score}`;
+    });
+  </script>
+</body>
+</html>
