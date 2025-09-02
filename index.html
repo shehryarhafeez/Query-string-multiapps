@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query String Applications</title>
+    <style>
+        :root {
+            --primary-color: #f50000;
+            --secondary-color: #000000;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+            --light-bg: #f8f9fa;
+            --dark-bg: #212529;
+            --blue-bg: #03045e;
+            --light-text: #f8f9fa;
+            --dark-text: #212529;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        body.theme-dark {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+        }
+
+        body.theme-blue {
+            background-color: var(--blue-bg);
+            color: var(--light-text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        body.theme-dark .navbar {
+            background-color: #000000;
+        }
+
+        body.theme-blue .navbar {
+            background-color: #000b2e;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(43, 201, 153, 0.1);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* App View Styles */
+        .app-view {
+            display: none;
+            margin-bottom: 40px;
+        }
+
+        .app-view.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .app-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        body.theme-dark .app-card {
+            background-color: #000307;
+        }
+
+        body.theme-blue .app-card {
+            background-color: #000c35;
+        }
+
+     
+
+        .app-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        body.theme-dark .result {
+            background-color: #000000;
+        }
+
+        body.theme-blue .result {
+            background-color: #00103d;
+        }
+
+        .task-description {
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        body.theme-dark .task-description {
+            background-color: #374151;
+        }
+
+        body.theme-blue .task-description {
+            background-color: #1e3a8a;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-item {
+                border-bottom: 1px solid #eee;
+            }
+            
+            body.theme-dark .nav-item {
+                border-bottom: 1px solid #4b5563;
+            }
+            
+            .nav-item:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Query String Applications</h1>
+            <p>Learn how to use query strings to pass data between pages</p>
+        </header>
+
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <div class="nav-item active" data-app="greeting">Greeting App</div>
+            <div class="nav-item" data-app="calculator">Calculator App</div>
+            <div class="nav-item" data-app="theme">Theme Switcher</div>
+            <div class="nav-item" data-app="product">Product Viewer</div>
+            <div class="nav-item" data-app="quiz">Quiz App</div>
+        </div>
+
+        <!-- App Views -->
+        <!-- Task 1: Greeting App -->
+        <div id="greeting-app" class="app-view active">
+            <div class="app-card">
+                <h2>Greeting App</h2>
+                <div class="task-description">
+                    Enter your name and see a personalized greeting using query strings.
+                </div>
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
+                <button onclick="greetUser()">Greet Me</button>
+                <div id="greeting-result" class="result">
+                    Your greeting will appear here.
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 2: Calculator App -->
+        <div id="calculator-app" class="app-view">
+            <div class="app-card">
+                <h2>Calculator App</h2>
+                <div class="task-description">
+                    Perform calculations and see the result using query strings.
+                </div>
+                <div class="form-group">
+                    <label for="num1">First Number:</label>
+                    <input type="number" id="num1" placeholder="Enter first number">
+                </div>
+                <div class="form-group">
+                    <label for="num2">Second Number:</label>
+                    <input type="number" id="num2" placeholder="Enter second number">
+                </div>
+                <div class="form-group">
+                    <label for="operation">Operation:</label>
+                    <select id="operation">
+                        <option value="add">Addition (+)</option>
+                        <option value="subtract">Subtraction (-)</option>
+                        <option value="multiply">Multiplication (*)</option>
+                        <option value="divide">Division (/)</option>
+                    </select>
+                </div>
+                <button onclick="calculate()">Calculate</button>
+                <div id="calculation-result" class="result">
+                    Calculation result will appear here.
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 3: Theme Switcher -->
+        <div id="theme-app" class="app-view">
+            <div class="app-card">
+                <h2>Theme Switcher</h2>
+                <div class="task-description">
+                    Change the theme of the page using query strings.
+                </div>
+                <div class="form-group">
+                    <label for="theme">Select Theme:</label>
+                    <select id="theme">
+                        <option value="light">Light Theme</option>
+                        <option value="dark">Dark Theme</option>
+                        <option value="blue">Blue Theme</option>
+                    </select>
+                </div>
+                <button onclick="changeTheme()">Apply Theme</button>
+                <div class="result">
+                    Current theme: <span id="current-theme">Light</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 4: Product Viewer -->
+        <div id="product-app" class="app-view">
+            <div class="app-card">
+                <h2>Product Viewer</h2>
+                <div class="task-description">
+                    View product details using query strings with product ID.
+                </div>
+                <div class="form-group">
+                    <label for="productId">Product ID:</label>
+                    <input type="number" id="productId" placeholder="Enter product ID (101 or 107)">
+                
+                </div>
+                <button onclick="viewProduct()">View Product</button>
+                <div id="product-result" class="result">
+                    Product details will appear here.
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 5: Quiz App -->
+        <div id="quiz-app" class="app-view">
+            <div class="app-card">
+                <h2>Quiz App</h2>
+                <div class="task-description">
+                    Take a quiz and see your results using query strings.
+                </div>
+                <div class="form-group">
+                    <label for="quizUser">Your Name:</label>
+                    <input type="text" id="quizUser" placeholder="Enter your name">
+                </div>
+                <div id="quiz-questions">
+                    <div class="form-group">
+                        <label>1. What is 2 + 2?</label>
+                        <select id="q1">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>2. What is the capital of France?</label>
+                        <select id="q2">
+                            <option value="London">London</option>
+                            <option value="Berlin">Berlin</option>
+                            <option value="Paris">Paris</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>3. Which is not a programming language?</label>
+                        <select id="q3">
+                            <option value="Java">Java</option>
+                            <option value="Python">Python</option>
+                            <option value="Carrot">Carrot</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="submitQuiz()">Submit Quiz</button>
+                <div id="quiz-result" class="result">
+                    Quiz results will appear here.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Query String Applications &copy; 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        // Product data for Task 4
+        const products = [
+            { id: 101, name: "Hp-Laptop", price: 500 },
+            { id: 102, name: "Iphone-XR", price: 300 },
+            { id: 103, name: "Wireless-HeadPhones", price: 100 },
+            { id: 104, name: "MousePad", price: 30 },
+            { id: 105, name: "Type-C-Charger", price: 50 },
+            { id: 106, name: "Leather-Bag", price: 400 },
+            { id: 107, name: "vivo-Y29", price: 300 },
+        ];
+
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Update active nav item
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding app view
+                    const appId = this.getAttribute('data-app');
+                    const appViews = document.querySelectorAll('.app-view');
+                    appViews.forEach(view => view.classList.remove('active'));
+                    document.getElementById(`${appId}-app`).classList.add('active');
+                });
+            });
+            
+            // Check for query parameters in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Task 1: Greeting App
+            if (urlParams.has('name')) {
+                // Show greeting app if name parameter exists
+                showApp('greeting');
+                const name = urlParams.get('name');
+                document.getElementById('greeting-result').textContent = `Hello ${name}! Welcome back.`;
+                document.getElementById('name').value = name;
+            }
+            
+            // Task 2: Calculator App
+            if (urlParams.has('num1') && urlParams.has('num2') && urlParams.has('op')) {
+                // Show calculator app if calculation parameters exist
+                showApp('calculator');
+                const num1 = parseFloat(urlParams.get('num1'));
+                const num2 = parseFloat(urlParams.get('num2'));
+                const op = urlParams.get('op');
+                
+                let result;
+                switch (op) {
+                    case 'add':
+                        result = num1 + num2;
+                        break;
+                    case 'subtract':
+                        result = num1 - num2;
+                        break;
+                    case 'multiply':
+                        result = num1 * num2;
+                        break;
+                    case 'divide':
+                        result = num1 / num2;
+                        break;
+                    default:
+                        result = 'Invalid operation';
+                }
+                
+                document.getElementById('calculation-result').textContent = `Result: ${result}`;
+                document.getElementById('num1').value = num1;
+                document.getElementById('num2').value = num2;
+                document.getElementById('operation').value = op;
+            }
+            
+            // Task 3: Theme Switcher
+            if (urlParams.has('theme')) {
+                // Show theme app if theme parameter exists
+                showApp('theme');
+                const theme = urlParams.get('theme');
+                document.body.className = `theme-${theme}`;
+                document.getElementById('theme').value = theme;
+                document.getElementById('current-theme').textContent = 
+                    theme.charAt(0).toUpperCase() + theme.slice(1);
+            }
+            
+            // Task 4: Product Viewer
+            if (urlParams.has('id')) {
+                // Show product app if id parameter exists
+                showApp('product');
+                const productId = parseInt(urlParams.get('id'));
+                const product = products.find(p => p.id === productId);
+                
+                if (product) {
+                    document.getElementById('product-result').textContent = 
+                        `${product.name}: $${product.price}`;
+                    document.getElementById('productId').value = productId;
+                } else {
+                    document.getElementById('product-result').textContent = 
+                        'Product not found';
+                }
+            }
+            
+            // Task 5: Quiz App
+            if (urlParams.has('user') && urlParams.has('score')) {
+                // Show quiz app if quiz parameters exist
+                showApp('quiz');
+                const user = urlParams.get('user');
+                const score = urlParams.get('score');
+                
+                document.getElementById('quiz-result').textContent = 
+                    `${user}, you scored ${score} out of 3 points!`;
+                document.getElementById('quizUser').value = user;
+            }
+        });
+
+        // Function to show a specific app
+        function showApp(appId) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-app') === appId) {
+                    item.classList.add('active');
+                }
+            });
+            
+            const appViews = document.querySelectorAll('.app-view');
+            appViews.forEach(view => view.classList.remove('active'));
+            document.getElementById(`${appId}-app`).classList.add('active');
+        }
+
+
+
+        // Task 1: Greet User
+        function greetUser() {
+            const name = document.getElementById('name').value.trim();
+            if (name) {
+                // Update the URL with query string
+                window.location.href = `${window.location.pathname}?name=${encodeURIComponent(name)}`;
+            } else {
+                document.getElementById('greeting-result').textContent = 'Please enter your name.';
+            }
+        }
+
+        // Task 2: Calculate
+        function calculate() {
+            const num1 = document.getElementById('num1').value;
+            const num2 = document.getElementById('num2').value;
+            const op = document.getElementById('operation').value;
+            
+            if (num1 && num2) {
+                // Update the URL with query string
+                window.location.href = `${window.location.pathname}?num1=${num1}&num2=${num2}&op=${op}`;
+            } else {
+                document.getElementById('calculation-result').textContent = 'Please enter both numbers.';
+            }
+        }
+
+        // Task 3: Change Theme
+        function changeTheme() {
+            const theme = document.getElementById('theme').value;
+            // Update the URL with query string
+            window.location.href = `${window.location.pathname}?theme=${theme}`;
+        }
+
+        // Task 4: View Product
+        function viewProduct() {
+            const productId = document.getElementById('productId').value;
+            if (productId) {
+                // Update the URL with query string
+                window.location.href = `${window.location.pathname}?id=${productId}`;
+            } else {
+                document.getElementById('product-result').textContent = 'Please enter a product ID.';
+            }
+        }
+
+        // Task 5: Submit Quiz
+        function submitQuiz() {
+            const user = document.getElementById('quizUser').value.trim();
+            if (!user) {
+                document.getElementById('quiz-result').textContent = 'Please enter your name.';
+                return;
+            }
+            
+            // Calculate score
+            let score = 0;
+            if (document.getElementById('q1').value === '4') score++;
+            if (document.getElementById('q2').value === 'Paris') score++;
+            if (document.getElementById('q3').value === 'Carrot') score++;
+            
+            // Update the URL with query string
+            window.location.href = `${window.location.pathname}?user=${encodeURIComponent(user)}&score=${score}`;
+        }
+    </script>
+</body>
+</html>
